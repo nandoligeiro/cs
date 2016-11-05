@@ -1,6 +1,4 @@
-package br.com.ligeiro.cs.data.repository;
-
-import javax.inject.Singleton;
+package br.com.ligeiro.cs.data.repository.repo;
 
 import br.com.ligeiro.cs.domain.model.Repository;
 import rx.Observable;
@@ -11,5 +9,5 @@ import rx.Observable;
 
 public interface IRepoRepository {
 
-    Observable<Repository> getRepositories();
+    Observable<Repository> getRepositories(String page);
 }

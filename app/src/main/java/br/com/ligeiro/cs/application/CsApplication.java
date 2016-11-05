@@ -2,8 +2,10 @@ package br.com.ligeiro.cs.application;
 
 import android.app.Application;
 
-import br.com.ligeiro.cs.dagger.DaggerNetComponent;
-import br.com.ligeiro.cs.dagger.NetComponent;
+
+import br.com.ligeiro.cs.dagger.component.AppComponent;
+import br.com.ligeiro.cs.dagger.component.DaggerAppComponent;
+
 import br.com.ligeiro.cs.dagger.AppModule;
 import br.com.ligeiro.cs.dagger.NetModule;
 
@@ -14,18 +16,18 @@ import br.com.ligeiro.cs.dagger.NetModule;
 
 public class CsApplication extends Application {
 
-    private NetComponent netComponent;
+    private AppComponent appComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        netComponent = DaggerNetComponent.builder()
+        appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .netModule(new NetModule("https://api.github.com/"))
                 .build();
     }
 
-    public NetComponent getNetComponent() {
-        return netComponent;
+    public AppComponent getNetComponent() {
+        return appComponent;
     }
 }

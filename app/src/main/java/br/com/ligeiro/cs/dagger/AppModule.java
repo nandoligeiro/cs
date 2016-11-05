@@ -2,11 +2,9 @@ package br.com.ligeiro.cs.dagger;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import javax.inject.Singleton;
-
-import br.com.ligeiro.cs.data.repository.IRepoRepository;
-import br.com.ligeiro.cs.data.repository.RetrofitRest;
 
 import dagger.Module;
 import dagger.Provides;
@@ -30,14 +28,17 @@ public class AppModule {
         return mApplication;
     }
 
-    @Provides @Singleton Context provideApplicationContext() {
+    @Provides
+    @Singleton
+    public SharedPreferences provideSharePreferences() {
+        return mApplication.getSharedPreferences("pk", Context.MODE_PRIVATE);
+    }
+
+    @Provides
+    @Singleton
+    Context provideApplicationContext() {
         return this.mApplication;
     }
 
-
-    @Provides @Singleton
-    IRepoRepository provideIRepoRepository(RetrofitRest retrofitRest) {
-        return  retrofitRest;
-    }
 
 }

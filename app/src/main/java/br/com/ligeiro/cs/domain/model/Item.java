@@ -1,15 +1,19 @@
 package br.com.ligeiro.cs.domain.model;
 
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 
 
 /**
  * Created by Fernando on 01/11/16.
  */
 
-public class Item {
+public class Item implements Serializable {
 
 
     @SerializedName("id")

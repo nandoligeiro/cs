@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -20,6 +21,7 @@ import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -37,11 +39,6 @@ public class NetModule {
         this.mBaseUrl = mBaseUrl;
     }
 
-    @Provides
-    @Singleton
-    SharedPreferences providesSharedPreferences(Application application) {
-        return PreferenceManager.getDefaultSharedPreferences(application);
-    }
 
     @Provides
     @Singleton
@@ -63,6 +60,8 @@ public class NetModule {
     @Singleton
     OkHttpClient provideOkhttpClient(Cache cache) {
         OkHttpClient.Builder client = new OkHttpClient.Builder();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         client.cache(cache);
         return client.build();
     }

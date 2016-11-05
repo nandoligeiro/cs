@@ -1,25 +1,18 @@
 package br.com.ligeiro.cs.presentation.presenter.listrepository;
 
 
-
-import android.content.Context;
-
 import javax.inject.Inject;
 
-import br.com.ligeiro.cs.R;
 import br.com.ligeiro.cs.domain.interactor.GetRepositoryUseCase;
-import br.com.ligeiro.cs.domain.model.Item;
-import br.com.ligeiro.cs.presentation.presenter.IPresenter;
-import br.com.ligeiro.cs.presentation.view.activities.MainActivity;
-import br.com.ligeiro.cs.presentation.view.fragments.RepoDetailFragment;
-import br.com.ligeiro.cs.presentation.view.uicomponents.FragmentUtils;
+import br.com.ligeiro.cs.domain.model.Repository;
+import br.com.ligeiro.cs.presentation.presenter.AbstPresenter;
 
 
 /**
  * Created by Fernando on 02/11/16.
  */
 
-public class RepositoryPresenter implements IPresenter<IRepositoryView> {
+public class RepositoryPresenter extends AbstPresenter<IRepositoryView> implements IRepositoryPresenterView {
 
     private final GetRepositoryUseCase useCase;
 
@@ -32,52 +25,21 @@ public class RepositoryPresenter implements IPresenter<IRepositoryView> {
 
 
     @Override
-    public void onCreate() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
-        useCase.unSubscribe();
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-
-    public void showLoading() {
-
-
-    }
-
-
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void onRefreshPage() {
-
-       // useCase.execute(new RepositorySubscriber());
-
-    }
-
-
-
-    @Override
     public void onBind(IRepositoryView view) {
 
         this.repositoryView = view;
-        useCase.execute(new RepositorySubscriber(view));
+
+    }
+
+
+    @Override
+    public void onRefresh() {
+        useCase.execute(new RepositorySubscriber(repositoryView));
+
+    }
+
+    @Override
+    public void onRepoSelected(Repository repository) {
 
     }
 }

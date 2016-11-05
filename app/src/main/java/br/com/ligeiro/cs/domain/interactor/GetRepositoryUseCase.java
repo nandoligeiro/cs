@@ -2,7 +2,7 @@ package br.com.ligeiro.cs.domain.interactor;
 
 import javax.inject.Inject;
 
-import br.com.ligeiro.cs.data.repository.IRepoRepository;
+import br.com.ligeiro.cs.data.repository.repo.IRepoRepository;
 import br.com.ligeiro.cs.domain.model.Repository;
 import rx.Observable;
 
@@ -12,18 +12,19 @@ import rx.Observable;
 public class GetRepositoryUseCase extends UseCase<Repository> {
 
     private IRepoRepository repoRepository;
-
+    private String page;
 
     @Inject
-    protected GetRepositoryUseCase(IRepoRepository repoRepository) {
+    public GetRepositoryUseCase(IRepoRepository repoRepository, String page) {
 
         this.repoRepository = repoRepository;
+        this.page = page;
     }
 
 
 
     @Override
     Observable<Repository> createObservable() {
-        return repoRepository.getRepositories();
+        return repoRepository.getRepositories(this.page);
     }
 }

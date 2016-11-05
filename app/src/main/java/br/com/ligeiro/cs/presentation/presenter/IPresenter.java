@@ -21,7 +21,6 @@ public interface IPresenter<T extends View> {
 
     void onPause();
 
-    void onBind(T view);
     void onRefreshPage();
 
 }

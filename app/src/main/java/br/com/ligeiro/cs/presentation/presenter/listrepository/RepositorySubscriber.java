@@ -8,9 +8,10 @@ import rx.Subscriber;
 /**
  * Created by Fernando on 02/11/16.
  */
-public final class RepositorySubscriber<T> extends Subscriber<Repository> {
+public final class RepositorySubscriber extends Subscriber<Repository> {
 
     IRepositoryView view;
+
 
     public RepositorySubscriber(IRepositoryView view) {
 
@@ -34,7 +35,6 @@ public final class RepositorySubscriber<T> extends Subscriber<Repository> {
 
     @Override
     public void onNext(Repository repository) {
-
         view.displayRepositories(repository);
 
     }
