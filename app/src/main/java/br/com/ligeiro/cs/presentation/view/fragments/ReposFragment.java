@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,13 @@ import javax.inject.Inject;
 
 import br.com.ligeiro.cs.R;
 import br.com.ligeiro.cs.application.CsApplication;
-import br.com.ligeiro.cs.dagger.PageRepoModule;
 import br.com.ligeiro.cs.dagger.component.DaggerRepoComponent;
 import br.com.ligeiro.cs.dagger.component.RepoComponent;
-import br.com.ligeiro.cs.domain.model.Repository;
+import br.com.ligeiro.cs.dagger.module.RepoModule;
+import br.com.ligeiro.cs.domain.model.RepoAndUser;
 import br.com.ligeiro.cs.presentation.presenter.listrepository.IRepositoryView;
 import br.com.ligeiro.cs.presentation.presenter.listrepository.RepositoryPresenter;
+import br.com.ligeiro.cs.presentation.view.activities.MainActivity;
 import br.com.ligeiro.cs.presentation.view.adapters.ReposAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +39,14 @@ public class ReposFragment extends Fragment implements IRepositoryView {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    @Nullable
+    @BindView(R.id.progressBar)
+    View progressBar;
+
     ReposAdapter reposAdapter;
+    RepoComponent repoComponent;
+    LinearLayoutManager linearLayoutManager;
+
 
     @Inject
     RepositoryPresenter repositoryPresenter;
@@ -47,6 +56,7 @@ public class ReposFragment extends Fragment implements IRepositoryView {
         super.onCreate(savedInstanceState);
 
         initializeInjector();
+        setPresenter();
 
     }
 
@@ -56,8 +66,6 @@ public class ReposFragment extends Fragment implements IRepositoryView {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_repos, container, false);
         unbinder = ButterKnife.bind(this, view);
-        setRepos();
-        setAdapter();
 
         return view;
     }
@@ -67,12 +75,25 @@ public class ReposFragment extends Fragment implements IRepositoryView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        setRepositories();
+        onScrollListener();
+        setAdapter();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void displayError(String msg) {
+
+    }
+
+    @Override
+    public void displayRepositories(RepoAndUser repoAndUser) {
+        reposAdapter.notifyAdapter(repoAndUser);
+
     }
 
     private void setPresenter() {
@@ -82,37 +103,55 @@ public class ReposFragment extends Fragment implements IRepositoryView {
     }
 
     private void initializeInjector() {
-        RepoComponent repoComponent = DaggerRepoComponent.builder()
+        repoComponent = DaggerRepoComponent.builder()
                 .appComponent(((CsApplication) getActivity().getApplicationContext()).getNetComponent())
-                .pageRepoModule(new PageRepoModule("1"))
+                .activityModule(((MainActivity)getContext()).getActivityModule())
+                .repoModule(new RepoModule())
                 .build();
 
         repoComponent.inject(this);
-        setPresenter();
     }
 
-    private void setRepos() {
+    private void setRepositories() {
         repositoryPresenter.onRefresh();
     }
 
-    @Override
-    public void displayError(String msg) {
+    public void onScrollListener() {
+
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy > 0) {
+
+                    if ((linearLayoutManager.getChildCount() + linearLayoutManager.findFirstVisibleItemPosition())
+                            >= linearLayoutManager.getItemCount()) {
+                        Log.d("Scroll", "Fimmmmm");
+
+
+                    }
+                }
+            }
+        });
+
 
     }
-
-    @Override
-    public void displayRepositories(Repository repository) {
-        reposAdapter.notifyAdapter(repository);
-
-    }
-
 
     public void setAdapter() {
 
         reposAdapter = new ReposAdapter(getActivity());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(reposAdapter);
     }
+
 
 }

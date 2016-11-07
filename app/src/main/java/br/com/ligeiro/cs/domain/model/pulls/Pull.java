@@ -6,7 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.ligeiro.cs.domain.model.User;
+import br.com.ligeiro.cs.domain.model.repo.User;
+
 
 /**
  * Created by fernando.c.moreira on 03/11/2016.

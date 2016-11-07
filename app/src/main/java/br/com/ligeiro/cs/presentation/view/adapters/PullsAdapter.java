@@ -15,8 +15,8 @@ import java.util.LinkedHashMap;
 
 import br.com.ligeiro.cs.R;
 import br.com.ligeiro.cs.domain.model.PullAndUser;
-import br.com.ligeiro.cs.domain.model.User;
 import br.com.ligeiro.cs.domain.model.pulls.Pull;
+import br.com.ligeiro.cs.domain.model.repo.User;
 import br.com.ligeiro.cs.presentation.view.uicomponents.CircleTransform;
 import butterknife.BindView;
 import butterknife.ButterKnife;

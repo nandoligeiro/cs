@@ -33,12 +33,14 @@ public class PullModule {
 
 
     @Provides
+    @PerActivity
     IPullRepository provideIPullRepository(RetrofitPullRepository retrofitPullRepository) {
         return  retrofitPullRepository;
     }
 
 
     @Provides
+    @PerActivity
     public GetPullUseCase provideGetPullUseCase(IPullRepository iPullRepository){
         return new GetPullUseCase(iPullRepository,owner, repo);
     }

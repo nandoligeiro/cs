@@ -45,7 +45,7 @@ public class FragmentUtils {
 
             // Use empty instance
             result = instance;
-            ft.addToBackStack(tag).replace(layout, result, tag).commit();
+            ft.addToBackStack(tag).add(layout, result, tag).commit();
         }
 
         return result;

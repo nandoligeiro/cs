@@ -3,8 +3,9 @@ package br.com.ligeiro.cs.domain.model.pulls;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import br.com.ligeiro.cs.domain.model.Repository;
-import br.com.ligeiro.cs.domain.model.User;
+import br.com.ligeiro.cs.domain.model.repo.Repository;
+import br.com.ligeiro.cs.domain.model.repo.User;
+
 
 /**
  * Created by fernando.c.moreira on 03/11/2016.

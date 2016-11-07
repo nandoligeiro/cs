@@ -47,7 +47,7 @@
 
     <TextView
         android:text="Title"
-        android:layout_width="352dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/title"
         tools:layout_constraintTop_creator="1"

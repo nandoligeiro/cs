@@ -1,6 +1,7 @@
 package br.com.ligeiro.cs.data.repository.repo;
 
-import br.com.ligeiro.cs.domain.model.Repository;
+import br.com.ligeiro.cs.domain.model.RepoAndUser;
+import br.com.ligeiro.cs.domain.model.repo.Repository;
 import rx.Observable;
 
 /**
@@ -9,5 +10,5 @@ import rx.Observable;
 
 public interface IRepoRepository {
 
-    Observable<Repository> getRepositories(String page);
+    Observable<RepoAndUser> getRepositories(String page);
 }

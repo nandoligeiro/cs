@@ -2,10 +2,9 @@ package br.com.ligeiro.cs.data.rest;
 
 import java.util.List;
 
-import br.com.ligeiro.cs.domain.model.Repository;
-import br.com.ligeiro.cs.domain.model.User;
+import br.com.ligeiro.cs.domain.model.repo.Repository;
 import br.com.ligeiro.cs.domain.model.pulls.Pull;
-import retrofit2.Call;
+import br.com.ligeiro.cs.domain.model.repo.User;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;

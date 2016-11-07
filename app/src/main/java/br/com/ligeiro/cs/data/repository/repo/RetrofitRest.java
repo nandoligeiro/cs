@@ -1,9 +1,13 @@
 package br.com.ligeiro.cs.data.repository.repo;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import br.com.ligeiro.cs.data.rest.Api;
-import br.com.ligeiro.cs.domain.model.Repository;
+import br.com.ligeiro.cs.domain.model.RepoAndUser;
+import br.com.ligeiro.cs.domain.model.repo.Item;
+import br.com.ligeiro.cs.domain.model.repo.User;
 import retrofit2.Retrofit;
 import rx.Observable;
 
@@ -25,15 +29,19 @@ public class RetrofitRest implements IRepoRepository {
 
 
     @Override
-    public Observable<Repository> getRepositories(String page) {
-//      return Observable.zip(api.getJavaRepositories("language:Java", "stars", page), api.getUser("facebook"), new Func2<Repository, User, RepoAndUser>() {
-//          @Override
-//          public RepoAndUser call(Repository repository, User user) {
-//              return new RepoAndUser(repository, user);
-//          }
-//      });
+    public Observable<RepoAndUser> getRepositories(String page) {
 
-        return api.getJavaRepositories("language:Java", "stars", page);
+        ArrayList<User> users = new ArrayList<>();
+        ArrayList<Item> items = new ArrayList<>();
+
+        return api.getJavaRepositories("language:Java", "stars", page)
+                .flatMap(repository -> Observable.from(repository.getItems())
+                        .flatMap(item -> api.getUser(item.getOwner().getLogin())
+                                .map(user -> {
+                                    items.add(item);
+                                    users.add(user);
+                                    return new RepoAndUser(items, users);
+                                })));
 
 
     }

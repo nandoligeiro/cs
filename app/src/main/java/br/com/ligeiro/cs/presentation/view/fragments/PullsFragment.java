@@ -17,10 +17,11 @@ import br.com.ligeiro.cs.application.CsApplication;
 import br.com.ligeiro.cs.dagger.component.DaggerPullComponent;
 import br.com.ligeiro.cs.dagger.component.PullComponent;
 import br.com.ligeiro.cs.dagger.module.PullModule;
-import br.com.ligeiro.cs.domain.model.Item;
 import br.com.ligeiro.cs.domain.model.PullAndUser;
+import br.com.ligeiro.cs.domain.model.repo.Item;
 import br.com.ligeiro.cs.presentation.presenter.pulls.IPullView;
 import br.com.ligeiro.cs.presentation.presenter.pulls.PullPresenter;
+import br.com.ligeiro.cs.presentation.view.activities.MainActivity;
 import br.com.ligeiro.cs.presentation.view.adapters.PullsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,6 +82,7 @@ public class PullsFragment extends Fragment implements IPullView {
     private void initializeInjector() {
         PullComponent pullComponent = DaggerPullComponent.builder()
                 .appComponent(((CsApplication) getActivity().getApplicationContext()).getNetComponent())
+                .activityModule(((MainActivity)getActivity()).getActivityModule())
                 .pullModule(new PullModule(item.getOwner().getLogin(), item.getName()))
                 .build();
 

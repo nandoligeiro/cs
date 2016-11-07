@@ -1,4 +1,4 @@
-package br.com.ligeiro.cs.domain.model;
+package br.com.ligeiro.cs.domain.model.repo;
 
 
 

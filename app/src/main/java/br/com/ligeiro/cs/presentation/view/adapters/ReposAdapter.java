@@ -14,9 +14,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import br.com.ligeiro.cs.R;
-import br.com.ligeiro.cs.domain.model.Item;
-import br.com.ligeiro.cs.domain.model.Repository;
-import br.com.ligeiro.cs.domain.model.User;
+import br.com.ligeiro.cs.domain.model.RepoAndUser;
+import br.com.ligeiro.cs.domain.model.repo.Item;
+import br.com.ligeiro.cs.domain.model.repo.User;
 import br.com.ligeiro.cs.presentation.view.activities.MainActivity;
 import br.com.ligeiro.cs.presentation.view.fragments.PullsFragment;
 import br.com.ligeiro.cs.presentation.view.uicomponents.CircleTransform;
@@ -33,14 +33,12 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ReposViewHol
 
     Context context;
     private Unbinder unbinder;
-    Repository repository;
-    User user;
     ArrayList<Item> items = new ArrayList<>();
+    ArrayList<User> users = new ArrayList<>();
 
 
     public ReposAdapter(Context context) {
         this.context = context;
-
     }
 
 
@@ -55,15 +53,16 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ReposViewHol
     @Override
     public void onBindViewHolder(ReposViewHolder holder, int position) {
 
-        if (items.size() > 0) {
-            holder.repoName.setText(repository.getItems().get(position).getName());
-            holder.description.setText(repository.getItems().get(position).getDescription());
-            // holder.fullName.setText(user.getName());
-            holder.userName.setText(repository.getItems().get(position).getOwner().getLogin());
-            holder.stars.setText(repository.getItems().get(position).getStargazersCount().toString());
-            holder.forks.setText(repository.getItems().get(position).getForks().toString());
 
-            Picasso.with(context).load(repository.getItems().get(position).getOwner().getAvatarUrl())
+        if (items.size() > 0) {
+            holder.repoName.setText(items.get(position).getName());
+            holder.description.setText(items.get(position).getDescription());
+            holder.fullName.setText(users.get(position).getName());
+            holder.userName.setText(items.get(position).getOwner().getLogin());
+            holder.stars.setText(items.get(position).getStargazersCount().toString());
+            holder.forks.setText(items.get(position).getForks().toString());
+
+            Picasso.with(context).load(items.get(position).getOwner().getAvatarUrl())
                     .transform(new CircleTransform()).into(holder.avatar);
 
         }
@@ -71,10 +70,10 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ReposViewHol
 
     }
 
-    public void notifyAdapter(Repository repository) {
-        this.repository = repository;
+    public void notifyAdapter(RepoAndUser repoAndUser) {
 
-        items = (ArrayList<Item>) repository.getItems();
+        items = repoAndUser.items;
+        users = repoAndUser.users;
         notifyDataSetChanged();
     }
 
@@ -98,7 +97,7 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ReposViewHol
 
             Bundle args = new Bundle();
             PullsFragment pullsFragment = new PullsFragment();
-            args.putSerializable("item", repository.getItems().get(getLayoutPosition()));
+            args.putSerializable("item", items.get(getLayoutPosition()));
             pullsFragment.setArguments(args);
             FragmentUtils.getOrCreate((MainActivity) context, "repoDetail", pullsFragment, R.id.fragment_container);
 

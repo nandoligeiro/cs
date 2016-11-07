@@ -2,13 +2,14 @@ package br.com.ligeiro.cs.presentation.presenter.listrepository;
 
 import android.util.Log;
 
-import br.com.ligeiro.cs.domain.model.Repository;
+import br.com.ligeiro.cs.domain.model.RepoAndUser;
+import br.com.ligeiro.cs.domain.model.repo.Repository;
 import rx.Subscriber;
 
 /**
  * Created by Fernando on 02/11/16.
  */
-public final class RepositorySubscriber extends Subscriber<Repository> {
+public final class RepositorySubscriber extends Subscriber<RepoAndUser> {
 
     IRepositoryView view;
 
@@ -30,14 +31,14 @@ public final class RepositorySubscriber extends Subscriber<Repository> {
     public void onError(Throwable e) {
 
         view.displayError(e.toString());
+        Log.d("onError", e.toString());
 
     }
 
     @Override
-    public void onNext(Repository repository) {
-        view.displayRepositories(repository);
+    public void onNext(RepoAndUser repoAndUser) {
+        view.displayRepositories(repoAndUser);
 
     }
-
 
 }

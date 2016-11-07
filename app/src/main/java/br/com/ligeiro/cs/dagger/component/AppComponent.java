@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 
 import javax.inject.Singleton;
 
-import br.com.ligeiro.cs.dagger.AppModule;
-import br.com.ligeiro.cs.dagger.NetModule;
+import br.com.ligeiro.cs.dagger.module.AppModule;
+import br.com.ligeiro.cs.dagger.module.NetModule;
 import dagger.Component;
 import retrofit2.Retrofit;
 
@@ -18,9 +18,10 @@ import retrofit2.Retrofit;
 public interface AppComponent {
 
     Retrofit retrofit();
-    SharedPreferences sharePreferences();
-    Context provideApplicationContext();
 
+    SharedPreferences sharePreferences();
+
+    Context provideApplicationContext();
 
 
 }

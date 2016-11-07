@@ -6,8 +6,8 @@ import javax.inject.Inject;
 
 import br.com.ligeiro.cs.data.rest.Api;
 import br.com.ligeiro.cs.domain.model.PullAndUser;
-import br.com.ligeiro.cs.domain.model.User;
 import br.com.ligeiro.cs.domain.model.pulls.Pull;
+import br.com.ligeiro.cs.domain.model.repo.User;
 import retrofit2.Retrofit;
 import rx.Observable;
 
@@ -32,6 +32,7 @@ public class RetrofitPullRepository implements IPullRepository {
 
         ArrayList<User> userArrayList = new ArrayList();
         ArrayList<Pull> pullArrayList = new ArrayList<>();
+
         return api.getPulls(owner, repo)
                 .flatMap(pulls -> Observable.from(pulls))
                 .flatMap(pull -> api.getUser(pull.getUser().getLogin())

@@ -2,12 +2,10 @@ package br.com.ligeiro.cs.application;
 
 import android.app.Application;
 
-
 import br.com.ligeiro.cs.dagger.component.AppComponent;
 import br.com.ligeiro.cs.dagger.component.DaggerAppComponent;
-
-import br.com.ligeiro.cs.dagger.AppModule;
-import br.com.ligeiro.cs.dagger.NetModule;
+import br.com.ligeiro.cs.dagger.module.AppModule;
+import br.com.ligeiro.cs.dagger.module.NetModule;
 
 
 /**

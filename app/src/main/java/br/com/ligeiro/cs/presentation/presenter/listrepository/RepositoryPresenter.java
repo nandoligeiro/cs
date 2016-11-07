@@ -2,9 +2,11 @@ package br.com.ligeiro.cs.presentation.presenter.listrepository;
 
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
+import br.com.ligeiro.cs.dagger.component.RepoComponent;
 import br.com.ligeiro.cs.domain.interactor.GetRepositoryUseCase;
-import br.com.ligeiro.cs.domain.model.Repository;
+import br.com.ligeiro.cs.domain.model.repo.Repository;
 import br.com.ligeiro.cs.presentation.presenter.AbstPresenter;
 
 
@@ -18,8 +20,10 @@ public class RepositoryPresenter extends AbstPresenter<IRepositoryView> implemen
 
     private IRepositoryView repositoryView;
 
+
+
     @Inject
-    public RepositoryPresenter(GetRepositoryUseCase useCase) {
+    public RepositoryPresenter(@Named("page")GetRepositoryUseCase useCase) {
         this.useCase = useCase;
     }
 
@@ -42,4 +46,6 @@ public class RepositoryPresenter extends AbstPresenter<IRepositoryView> implemen
     public void onRepoSelected(Repository repository) {
 
     }
+
+
 }

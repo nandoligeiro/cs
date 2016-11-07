@@ -1,6 +1,7 @@
 package br.com.ligeiro.cs.data.repository.user;
 
-import br.com.ligeiro.cs.domain.model.User;
+
+import br.com.ligeiro.cs.domain.model.repo.User;
 import rx.Observable;
 
 /**

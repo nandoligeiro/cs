@@ -1,4 +1,4 @@
-package br.com.ligeiro.cs.dagger;
+package br.com.ligeiro.cs.dagger.module;
 
 import android.app.Application;
 import android.content.Context;
